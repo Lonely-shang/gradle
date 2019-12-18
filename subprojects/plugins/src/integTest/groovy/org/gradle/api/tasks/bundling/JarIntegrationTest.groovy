@@ -31,7 +31,7 @@ import java.util.jar.Manifest
 @TestReproducibleArchives
 class JarIntegrationTest extends AbstractIntegrationSpec {
 
-    def canCreateAnEmptyJar() {
+    def "can create an empty jar"() {
         given:
         buildFile << """
         task jar(type: Jar) {
@@ -49,7 +49,7 @@ class JarIntegrationTest extends AbstractIntegrationSpec {
         jar.assertFileContent('META-INF/MANIFEST.MF', 'Manifest-Version: 1.0\r\n\r\n')
     }
 
-    def canCreateAJarArchiveWithDefaultManifest() {
+    def "can create a jar archive with default manifest"() {
         given:
         createDir('test') {
             dir1 {
@@ -107,7 +107,7 @@ class JarIntegrationTest extends AbstractIntegrationSpec {
         jar.assertContainsFile('META-INF/AAA.META')
     }
 
-    def metaInfSpecsAreIndependentOfOtherSpec() {
+    def "meta inf specs are independent of other spec"() {
         given:
         createDir('test') {
             dir1 {
@@ -156,7 +156,7 @@ class JarIntegrationTest extends AbstractIntegrationSpec {
     }
 
     @ToBeFixedForInstantExecution
-    def usesManifestFromJarTaskWhenMergingJars() {
+    def "uses manifest from jar task when merging jars"() {
         given:
         createDir('src1') {
             dir1 { file 'file1.txt' }
@@ -200,7 +200,7 @@ class JarIntegrationTest extends AbstractIntegrationSpec {
         jarFixture.assertContainsFile('dir2/file2.txt')
     }
 
-    def excludeDuplicatesUseManifestOverMetaInf() {
+    def "exclude duplicates use manifest over meta inf"() {
         createDir('meta-inf') {
             file 'MANIFEST.MF'
         }
@@ -228,7 +228,7 @@ class JarIntegrationTest extends AbstractIntegrationSpec {
         manifest.mainAttributes.getValue('attr') == 'from manifest'
     }
 
-    def excludeDuplicatesUseMetaInfOverRegularFiles() {
+    def "exclude duplicates use meta inf over regular files"() {
         createDir('meta-inf1') {
             file 'file.txt'
         }
@@ -265,7 +265,7 @@ class JarIntegrationTest extends AbstractIntegrationSpec {
         jar.assertFileContent('META-INF/file.txt', 'good')
     }
 
-    def duplicateServicesIncludedOthersExcluded() {
+    def "duplicate services included others excluded"() {
         createParallelDirsWithServices()
 
         given:
@@ -288,7 +288,7 @@ class JarIntegrationTest extends AbstractIntegrationSpec {
         confirmDuplicateServicesPreserved()
     }
 
-    def duplicatesExcludedByDefaultWithExceptionForServices() {
+    def "duplicates excluded by default with exception for services"() {
         createParallelDirsWithServices()
 
         given:
