@@ -120,13 +120,13 @@ class CatchFeatureFailuresRunListener extends AbstractRunListener {
 
     static class UnexpectedSuccessException extends Exception {
         UnexpectedSuccessException() {
-            super("Expected to fail with instant execution, but succeeded!")
+            super("Expected to fail with ${failsBecause}, but succeeded!")
         }
     }
 
     static class ExpectedFailureException extends Exception {
         ExpectedFailureException(List<Throwable> failures) {
-            super("Expected failure with instant execution")
+            super("Expected failure with ${failsBecause}")
             failures.each { addSuppressed(it) }
         }
     }
