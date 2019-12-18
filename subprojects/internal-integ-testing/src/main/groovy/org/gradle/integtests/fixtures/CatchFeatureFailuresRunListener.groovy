@@ -72,13 +72,13 @@ class CatchFeatureFailuresRunListener extends AbstractRunListener {
     void afterFeature(FeatureInfo featureInfo) {
         if (featureInfo == feature) {
             if (failuresInterceptor.failures.empty) {
-                throw new UnexpectedSuccessException()
+                throw new UnexpectedSuccessException(failsBecause)
             } else {
                 System.err.println("Failed with ${failsBecause} as expected:")
                 if (failuresInterceptor.failures.size() == 1) {
                     failuresInterceptor.failures.first().printStackTrace()
                 } else {
-                    new ExpectedFailureException(failuresInterceptor.failures).printStackTrace()
+                    new ExpectedFailureException(failsBecause, failuresInterceptor.failures).printStackTrace()
                 }
             }
         }
@@ -119,13 +119,13 @@ class CatchFeatureFailuresRunListener extends AbstractRunListener {
     }
 
     static class UnexpectedSuccessException extends Exception {
-        UnexpectedSuccessException() {
+        UnexpectedSuccessException(String failsBecause) {
             super("Expected to fail with ${failsBecause}, but succeeded!")
         }
     }
 
     static class ExpectedFailureException extends Exception {
-        ExpectedFailureException(List<Throwable> failures) {
+        ExpectedFailureException(String failsBecause, List<Throwable> failures) {
             super("Expected failure with ${failsBecause}")
             failures.each { addSuppressed(it) }
         }
