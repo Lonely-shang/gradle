@@ -18,4 +18,5 @@ package org.gradle.plugins.install
 
 import org.gradle.api.tasks.Sync
 
+
 open class Install : Sync()

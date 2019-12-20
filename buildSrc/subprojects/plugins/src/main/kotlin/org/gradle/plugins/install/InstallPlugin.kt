@@ -20,7 +20,10 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.io.File
 
-private const val installPathProperty = "gradle_installPath"
+
+private
+const val installPathProperty = "gradle_installPath"
+
 
 /**
  * Adds some validation and conventions for `Install` tasks.

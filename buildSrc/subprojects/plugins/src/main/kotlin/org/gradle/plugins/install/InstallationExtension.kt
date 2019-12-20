@@ -18,6 +18,7 @@ package org.gradle.plugins.install
 
 import org.gradle.api.file.DirectoryProperty
 
+
 abstract class InstallationExtension {
     abstract val installDirectory: DirectoryProperty
 }
